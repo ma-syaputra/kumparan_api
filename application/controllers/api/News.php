@@ -36,6 +36,23 @@ class News extends REST_Controller {
         }        
 	}
 
+    public function tag_get($id){
+        if(!empty($id)){
+            $getContent    = $this->news->getContentTag($id);
+            if($getContent){
+                 $this->response([
+                    'status' => TRUE,
+                    'item'  => $getContent,
+                    'message' => 'Topic has been updated successfully.'
+                ], REST_Controller::HTTP_OK);
+            }else{
+                $this->response("Some problems occurred, please try again.", REST_Controller::HTTP_BAD_REQUEST);
+            }
+        }else{
+            $this->response("Provide complete user information to create.", REST_Controller::HTTP_BAD_REQUEST);
+        }        
+    }    
+
 	public function list_post($start=NULL,$limit=NULL) {
 		$newsName 	= trim($this->post('news_name'));
 		$statusNewsName = trim($this->post('status_name'));

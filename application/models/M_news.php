@@ -24,6 +24,18 @@ public function insertNews($array){
         return TRUE;
         endif;		
 	}
+    public function getContentTag($id){
+    $this->db->select('news.id,news.title,news.date_created,news.date_published,news.status,topic.topic_name');
+    $this->db->from('map_news');
+    $this->db->join('news','map_news.id_news=news.id');
+    $this->db->join('topic','map_news.id_news=news.id');
+    $this->db->where('topic.id',$id);
+    $this->db->group_by('news.id');
+
+    return $this->db->get()->result_array();
+
+
+    }
 
 
     public function updateTopic($userData,$id){
