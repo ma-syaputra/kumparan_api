@@ -80,12 +80,11 @@ class News extends REST_Controller {
    public function article_put() {
    		$userData = array();	
    		$id = $this->put('id');
-		$userData = array();
         $userData['title'] 				= trim($this->put('title'));
         $userData['summary'] 			= trim($this->put('summary'));
         $userData['content'] 			= trim($this->put('content'));
         $userData['status']     		= trim($this->put('status'));   	
-        if($status=='publish'):
+        if($userData['status'] =='publish'):
         $userData['date_published'] = date('Y-m-d H:i:s');
     	endif;
         if(!empty($id) && !empty($userData['status'])):
@@ -100,11 +99,11 @@ class News extends REST_Controller {
         $map = $this->news->insertMapNews($id_news);    		
     	endif;
     	endif;
-         if($update):
+         if($map):
               $this->response([
 
                     'status' => TRUE,
-                    'message' => 'Article has been'.' '.$status.' '.'successfully.'
+                    'message' => 'Article has been'.' '.$userData['status'].' '.'successfully.'
                 ], REST_Controller::HTTP_OK);
         else:
             $this->response([
