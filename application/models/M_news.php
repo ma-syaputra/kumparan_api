@@ -38,11 +38,35 @@ public function insertNews($array){
         return TRUE;
         endif;
     }
-
- public function delete($id){
+public function updateNewsStatus($userData,$id){
         $this->db->trans_begin();
-        $this->db->where('id', $id);
-        $this->db->delete('topic');
+        $this->db->where('id',$id);
+        $this->db->update('news',$userData);
+        if ($this->db->trans_status() === FALSE):
+        $this->db->trans_rollback();
+        return FALSE;
+        else:
+        $this->db->trans_commit();
+        return TRUE;
+        endif;
+    }    
+    public function updateNews($userData,$id){
+        $this->db->trans_begin();
+        $this->db->where('id',$id);
+        $this->db->update('news',$userData);
+        if ($this->db->trans_status() === FALSE):
+        $this->db->trans_rollback();
+        return FALSE;
+        else:
+        $this->db->trans_commit();
+        return TRUE;
+        endif;
+    }  
+
+ public function deleteMaps($id){
+        $this->db->trans_begin();
+        $this->db->where('id_news', $id);
+        $this->db->delete('map_news');
         if ($this->db->trans_status() === FALSE):
         $this->db->trans_rollback();
         return FALSE;

@@ -11,7 +11,7 @@ class Topic extends REST_Controller {
 	}
 	public function insert_post(){
  		$dataTopic = array();
-        $dataTopic['topic_name'] 			= rtrim(ltrim($this->post('topic_name')));
+        $dataTopic['topic_name'] 			= trim($this->post('topic_name'));
         $dataTopic['date_created']          = date('Y-m-d H:i:s');
         if(!empty($dataTopic['topic_name'])){
         	$last_id 	= $this->topic->insertTopic($dataTopic);
@@ -29,8 +29,8 @@ class Topic extends REST_Controller {
 	}
 
 	public function list_post($start=NULL,$limit=NULL) {
-		$newsName 	= rtrim(ltrim($this->post('topic_name')));
-        $topicName  = rtrim(ltrim($this->post('topic_name')));
+		$newsName 	= trim($this->post('topic_name'));
+        $topicName  = trim($this->post('topic_name'));
 		$countTopic = $this->topic->getCountTopic($topicName);
         $topic = $this->topic->getTopic($topicName,$start,$limit);
         $dataTopic = array ('rowTopic'=>$countTopic,
@@ -48,7 +48,7 @@ class Topic extends REST_Controller {
     public function update_put() {
         $userData = array();
         $id = $this->put('id');
-        $userData['topic_name'] = rtrim(ltrim($this->put('topic_name')));   
+        $userData['topic_name'] = trim($this->put('topic_name'));   
         if(!empty($id) && !empty($userData['topic_name'])):
         $update = $this->topic->updateTopic($userData, $id);
          if($update):
